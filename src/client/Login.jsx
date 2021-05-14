@@ -78,11 +78,11 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                  <Form.Label style={{ color: "white" }}>Password</Form.Label>
+                  <Form.Label style={{ color: "white" }}>Passphrase</Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Passphrase"
                     onChange={handleChange}
                     value={form.password}
                   />

@@ -108,11 +108,13 @@ const Register = () => {
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">
-                    <Form.Label style={{ color: "white" }}>Password</Form.Label>
+                    <Form.Label style={{ color: "white" }}>
+                      Passphrase
+                    </Form.Label>
                     <Form.Control
                       type="password"
                       name="password"
-                      placeholder="Password"
+                      placeholder="Passphrase"
                       onChange={handleChange}
                       value={form.password}
                     />
@@ -120,11 +122,11 @@ const Register = () => {
 
                   <Form.Group controlId="confirmPassword">
                     <Form.Label style={{ color: "white" }}>
-                      Confirm Password
+                      Confirm Passphrase
                     </Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Confirm Password"
+                      placeholder="Confirm Passphrase"
                       value={cPass}
                       onChange={(e) => setCPass(e.target.value)}
                     />
