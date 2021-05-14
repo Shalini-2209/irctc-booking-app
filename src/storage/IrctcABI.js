@@ -107,24 +107,6 @@ export const IrctcABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "getUsers",
-    outputs: [
-      {
-        internalType: "address[]",
-        name: "_userId",
-        type: "address[]",
-      },
-      {
-        internalType: "string[]",
-        name: "name",
-        type: "string[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "string",
@@ -285,6 +267,11 @@ export const IrctcABI = [
     name: "trains",
     outputs: [
       {
+        internalType: "uint256",
+        name: "trainNo",
+        type: "uint256",
+      },
+      {
         internalType: "string",
         name: "trainName",
         type: "string",
@@ -311,6 +298,40 @@ export const IrctcABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "users",
+    outputs: [
+      {
+        internalType: "address",
+        name: "userId",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "email",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "pwd",
+        type: "string",
       },
     ],
     stateMutability: "view",

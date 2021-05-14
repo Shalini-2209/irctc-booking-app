@@ -4,10 +4,12 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./client/Register";
+import Admin from "./client/Admin";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Register />
+    {/* <Register /> */}
+    <Admin />
   </React.StrictMode>,
   document.getElementById("root")
 );
