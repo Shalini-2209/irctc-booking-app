@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import contract from "../storage/Contracts";
+import contract from "../../storage/Contracts";
 
-import Login from "./Login";
+import Login from "../users/Login";
 
 const Register = () => {
   contract.web.eth.defaultAccount = contract.web.eth.accounts[0];

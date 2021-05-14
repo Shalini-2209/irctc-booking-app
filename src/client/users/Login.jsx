@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import contract from "../storage/Contracts";
+import contract from "../../storage/Contracts";
 
 const Login = () => {
 
