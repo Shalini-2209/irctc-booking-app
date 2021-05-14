@@ -67,7 +67,7 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                  <Form.Label style={{ color: "white" }}>Passphrase</Form.Label>
+                  <Form.Label style={{ color: "white" }}>Enter Passphrase</Form.Label>
                   <Form.Control
                     type="password"
                     name="password"

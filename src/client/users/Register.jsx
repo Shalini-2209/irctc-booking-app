@@ -101,7 +101,7 @@ const Register = () => {
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label style={{ color: "white" }}>
-                      Passphrase
+                      Enter Passphrase
                     </Form.Label>
                     <Form.Control
                       type="password"
