@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import Web3 from "web3";
-import { IrctcABI } from "../storage/IrctcABI";
+import contract from "../storage/Contracts";
+
 import Login from "./Login";
 
-const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
-web3.eth.defaultAccount = web3.eth.accounts[0];
-
-const RemixContract = new web3.eth.Contract(
-  IrctcABI,
-  "0x5F9a0EDb812a07FC78982C5E5D811eEB9e2EbF46"
-);
-
 const Register = () => {
-  web3.eth.defaultAccount = web3.eth.accounts[0];
+  contract.web.eth.defaultAccount = contract.web.eth.accounts[0];
 
   let initial = {
     name: "",
@@ -45,13 +37,13 @@ const Register = () => {
     if (cPass !== form.password) alert("Passphrase mismatch");
     else {
       e.preventDefault();
-      let values = await web3.eth.getAccounts();
+      let values = await contract.web.eth.getAccounts();
       const authority = values[0];
 
-      const gas = await RemixContract.methods
+      const gas = await contract.RemixContract.methods
         .register(values[index], form.name, form.email, form.password)
         .estimateGas();
-      const result = await RemixContract.methods
+      const result = await contract.RemixContract.methods
         .register(values[index], form.name, form.email, form.password)
         .send({ from: authority, gas });
       console.log(result);
