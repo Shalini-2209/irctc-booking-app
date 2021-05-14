@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
-import { IrctcABI } from "../storage/IrctcABI";
+import { IrctcABI } from "../../storage/IrctcABI";
 
 const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
 web3.eth.defaultAccount = web3.eth.accounts[0];

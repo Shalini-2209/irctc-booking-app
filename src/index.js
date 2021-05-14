@@ -4,7 +4,7 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./client/Register";
-import Admin from "./client/Admin";
+import Admin from "./client/admin/Admin";
 
 ReactDOM.render(
   <React.StrictMode>
