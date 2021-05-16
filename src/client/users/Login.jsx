@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import contract from "../../storage/Contracts";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Web3 from "web3";
+import { IrctcABI } from "../storage/IrctcABI";
+
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
+web3.eth.defaultAccount = web3.eth.accounts[0];
+
+const RemixContract = new web3.eth.Contract(
+  IrctcABI,
+  "0xf54e4Fb224f8B602C7D34e38aD3cfaF40c6bf35C"
+);
 
 const Login = () => {
-
   let initial = {
     email: "",
     password: "",
@@ -67,7 +76,9 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                  <Form.Label style={{ color: "white" }}>Enter Passphrase</Form.Label>
+                  <Form.Label style={{ color: "white" }}>
+                    Enter Passphrase
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
