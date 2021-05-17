@@ -3,15 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
-import Register from "./client/Register";
-import Admin from "./client/admin/Admin";
-import Trains from "./client/admin/Trains";
+import Routes from "./navigations/routes";
+
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Register /> */}
-    {/* <Admin /> */}
-    <Trains />
+    <Routes />
   </React.StrictMode>,
   document.getElementById("root")
 );

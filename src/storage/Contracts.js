@@ -3,9 +3,9 @@ import { IrctcABI } from "./IrctcABI";
 
 const web = new web3("http://localhost:7545");
 
-const RemixContract = new web3.eth.Contract(
+const RemixContract = new web.eth.Contract(
   IrctcABI,
-  "0x5F9a0EDb812a07FC78982C5E5D811eEB9e2EbF46"
+  "0x0af0a0380AF1DDF0f1621D5686fd9209De03ADd0"
 );
 
 export default { web, RemixContract };

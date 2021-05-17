@@ -71,9 +71,9 @@ export const IrctcABI = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_userId",
-        type: "address",
+        internalType: "string",
+        name: "_email",
+        type: "string",
       },
       {
         internalType: "uint256",
@@ -175,14 +175,19 @@ export const IrctcABI = [
     name: "passengers",
     outputs: [
       {
-        internalType: "address",
-        name: "userId",
-        type: "address",
+        internalType: "string",
+        name: "email",
+        type: "string",
       },
       {
         internalType: "uint256",
         name: "trainNo",
         type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "date",
+        type: "string",
       },
       {
         internalType: "string",
