@@ -2,10 +2,9 @@ import { useContext } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { UserContext } from "../../storage/Contexts";
 import { Globe } from "react-bootstrap-icons";
-import styles from "../../style/style";
 
 const NavBar = () => {
-  const { data, setData } = useContext(UserContext);
+  const { setData } = useContext(UserContext);
 
   const clearData = () => {
     setData("");

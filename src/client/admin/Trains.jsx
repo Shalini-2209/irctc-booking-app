@@ -1,14 +1,5 @@
 import { useState, useEffect } from "react";
-import Web3 from "web3";
-import { IrctcABI } from "../../storage/IrctcABI";
-
-const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
-web3.eth.defaultAccount = web3.eth.accounts[0];
-
-const RemixContract = new web3.eth.Contract(
-  IrctcABI,
-  "0xD5Ef5e729ACba9462359B52925f85A49Aca2ea0c"
-);
+import contract from "../../storage/Contracts";
 
 const Trains = () => {
   let initial = {
@@ -26,10 +17,17 @@ const Trains = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [filter, setFilter] = useState([]);
   const [isFound, setIsFound] = useState(false);
+  const [authority, setAuthority] = useState("");
 
   useEffect(() => {
+    getAuthority();
     getTrains();
   }, []);
+
+  const getAuthority = async () => {
+    let values = await contract.web.eth.getAccounts();
+    setAuthority(values[0]);
+  };
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -42,16 +40,24 @@ const Trains = () => {
     });
   };
 
+  // pre-populate data for update
+  const prepopulateData = (val) => {
+    setShowForm(!showForm);
+    let tempTrain = trains.filter((train) => train.trainNo === val);
+    setForm(tempTrain[0]);
+    setIsUpdate(true);
+  };
+
   // Read
   const getTrains = async (e) => {
     setTrains([]);
-    let count = await RemixContract.methods.trainCount().call();
+    let count = await contract.RemixContract.methods.trainCount().call();
 
     for (let i = 0; i < count; i++) {
-      let train = await RemixContract.methods.trains(i).call();
+      let train = await contract.RemixContract.methods.trains(i).call();
       // console.log(train);
 
-      if (train.trainNo != 0) {
+      if (train.trainNo !== 0) {
         setTrains((prev) => [
           ...prev,
           {
@@ -72,10 +78,7 @@ const Trains = () => {
     e.preventDefault();
 
     try {
-      let values = await web3.eth.getAccounts();
-      const authority = values[0];
-
-      let addMethod = RemixContract.methods.addTrain(
+      let addMethod = contract.RemixContract.methods.addTrain(
         form.trainNo,
         form.name,
         form.src,
@@ -105,26 +108,19 @@ const Trains = () => {
       ]);
 
       setForm(initial);
+      setShowForm(false);
+      // alert("Added successfully");
     } catch (e) {
       console.log(e);
       alert("Problem inserting train");
     }
   };
 
-  const prepopulateData = (val) => {
-    setShowForm(!showForm);
-    let tempTrain = trains.filter((train) => train.trainNo === val);
-    setForm(tempTrain[0]);
-    setIsUpdate(true);
-  };
-
   // Update
   const editTrain = async (e) => {
     e.preventDefault();
     try {
-      let values = await web3.eth.getAccounts();
-      const authority = values[0];
-      let updateMethod = RemixContract.methods.updateTrain(
+      let updateMethod = contract.RemixContract.methods.updateTrain(
         form.trainNo,
         form.name,
         form.src,
@@ -134,11 +130,11 @@ const Trains = () => {
       );
 
       let gasEstimate = await updateMethod.estimateGas();
-      const result = await updateMethod.send({
+      const response = await updateMethod.send({
         from: authority,
         gas: gasEstimate,
       });
-      // console.log(result);
+      // console.log(response);
 
       let updatedTrains = [];
       trains.map((train) =>
@@ -151,6 +147,7 @@ const Trains = () => {
       setForm(initial);
       setIsUpdate(false);
       setShowForm(!showForm);
+      alert("Updated successfully");
     } catch (e) {
       console.log(e);
       alert("Problem updating train");
@@ -159,15 +156,17 @@ const Trains = () => {
 
   // Delete
   const removeTrain = async (val) => {
-    let values = await web3.eth.getAccounts();
-    const authority = values[0];
-    const gas = await RemixContract.methods.deleteTrain(val).estimateGas();
-    const response = await RemixContract.methods
-      .deleteTrain(val)
-      .send({ from: authority, gas });
+    if (window.confirm("Are you sure you want to delete?")) {
+      const gas = await contract.RemixContract.methods
+        .deleteTrain(val)
+        .estimateGas();
+      const response = await contract.RemixContract.methods
+        .deleteTrain(val)
+        .send({ from: authority, gas });
 
-    setTrains(trains.filter((train) => train.trainNo !== val));
-    // console.log(response);
+      setTrains(trains.filter((train) => train.trainNo !== val));
+      // console.log(response);
+    }
   };
 
   // Search
@@ -190,6 +189,7 @@ const Trains = () => {
     <div className="container">
       <h1 className="display-5">Trains</h1>
 
+      {/* Search */}
       <input
         type="text"
         className="form-control"
@@ -197,8 +197,12 @@ const Trains = () => {
         onChange={filterItems}
       />
 
-      <button className="btn btn-primary my-3 " onClick={toggleForm}>
-        Add Train
+      {/* Toggle button for displaying form */}
+      <button
+        className={`btn my-3 ${showForm ? "btn-danger" : "btn-primary"}`}
+        onClick={toggleForm}
+      >
+        {showForm ? "Close" : "Add Train"}
       </button>
 
       {showForm && (
@@ -264,7 +268,7 @@ const Trains = () => {
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            Submit
+            {isUpdate ? "Update" : "Submit"}
           </button>
         </form>
       )}
