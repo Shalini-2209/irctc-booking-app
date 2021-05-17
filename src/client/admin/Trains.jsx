@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import contract from "../../storage/Contracts";
+import DisplayTrains from "./DisplayTrains";
+import SearchTrain from "./SearchTrain";
+import TrainButton from "./TrainButton";
+import TrainForm from "./TrainForm";
 
 const Trains = () => {
   let initial = {
@@ -55,9 +59,9 @@ const Trains = () => {
 
     for (let i = 0; i < count; i++) {
       let train = await contract.RemixContract.methods.trains(i).call();
-      // console.log(train);
+      console.log(train);
 
-      if (train.trainNo !== 0) {
+      if (train.trainNo != 0) {
         setTrains((prev) => [
           ...prev,
           {
@@ -147,7 +151,7 @@ const Trains = () => {
       setForm(initial);
       setIsUpdate(false);
       setShowForm(!showForm);
-      alert("Updated successfully");
+      // alert("Updated successfully");
     } catch (e) {
       console.log(e);
       alert("Problem updating train");
@@ -156,33 +160,21 @@ const Trains = () => {
 
   // Delete
   const removeTrain = async (val) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      const gas = await contract.RemixContract.methods
-        .deleteTrain(val)
-        .estimateGas();
-      const response = await contract.RemixContract.methods
-        .deleteTrain(val)
-        .send({ from: authority, gas });
+    try {
+      if (window.confirm("Are you sure you want to delete?")) {
+        const gas = await contract.RemixContract.methods
+          .deleteTrain(val)
+          .estimateGas();
+        const response = await contract.RemixContract.methods
+          .deleteTrain(val)
+          .send({ from: authority, gas });
 
-      setTrains(trains.filter((train) => train.trainNo !== val));
-      // console.log(response);
+        setTrains(trains.filter((train) => train.trainNo !== val));
+        // console.log(response);
+      }
+    } catch (Error) {
+      alert("Problem deleting train");
     }
-  };
-
-  // Search
-  const filterItems = (e) => {
-    let value = e.target.value.toLowerCase();
-    let temp = trains.filter(
-      (train) => train.name.toLowerCase().indexOf(value) !== -1
-    );
-    if (temp.length !== 0) {
-      setFilter(temp);
-      setIsFound(true);
-    } else {
-      setIsFound(false);
-      alert("No trains found");
-    }
-    // console.log(temp);
   };
 
   return (
@@ -190,160 +182,33 @@ const Trains = () => {
       <h1 className="display-5">Trains</h1>
 
       {/* Search */}
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Train name"
-        onChange={filterItems}
+      <SearchTrain
+        setFilter={setFilter}
+        setIsFound={setIsFound}
+        trains={trains}
       />
 
       {/* Toggle button for displaying form */}
-      <button
-        className={`btn my-3 ${showForm ? "btn-danger" : "btn-primary"}`}
-        onClick={toggleForm}
-      >
-        {showForm ? "Close" : "Add Train"}
-      </button>
+      <TrainButton showForm={showForm} toggleForm={toggleForm} />
 
-      {showForm && (
-        <form onSubmit={isUpdate ? editTrain : addTrain}>
-          <div className="my-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Train Number"
-              name="trainNo"
-              onChange={handleChange}
-              value={form.trainNo}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Train Name"
-              name="name"
-              onChange={handleChange}
-              value={form.name}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Source"
-              name="src"
-              onChange={handleChange}
-              value={form.src}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Destination"
-              name="dest"
-              onChange={handleChange}
-              value={form.dest}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="time"
-              className="form-control"
-              placeholder="Time of Departure"
-              name="time"
-              onChange={handleChange}
-              value={form.time}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Number of Seats"
-              name="seats"
-              onChange={handleChange}
-              value={form.seats}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            {isUpdate ? "Update" : "Submit"}
-          </button>
-        </form>
-      )}
+      {/* Add/Update Form */}
+      <TrainForm
+        showForm={showForm}
+        isUpdate={isUpdate}
+        addTrain={addTrain}
+        editTrain={editTrain}
+        form={form}
+        handleChange={handleChange}
+      />
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Train No</th>
-            <th scope="col">Train Name</th>
-            <th scope="col">Time</th>
-            <th scope="col">Source</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Seats</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        {isFound ? (
-          <tbody>
-            {filter.map((train, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{train.trainNo}</td>
-                <td>{train.name}</td>
-                <td>{train.time} Hr</td>
-                <td>{train.src}</td>
-                <td>{train.dest}</td>
-                <td>{train.seats}</td>
-                <td>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => prepopulateData(train.trainNo)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => removeTrain(train.trainNo)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        ) : (
-          <tbody>
-            {trains.map((train, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{train.trainNo}</td>
-                <td>{train.name}</td>
-                <td>{train.time} Hr</td>
-                <td>{train.src}</td>
-                <td>{train.dest}</td>
-                <td>{train.seats}</td>
-                <td>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => prepopulateData(train.trainNo)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => removeTrain(train.trainNo)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        )}
-      </table>
+      {/* List all trains */}
+      <DisplayTrains
+        isFound={isFound}
+        filter={filter}
+        trains={trains}
+        prepopulateData={prepopulateData}
+        removeTrain={removeTrain}
+      />
     </div>
   );
 };
