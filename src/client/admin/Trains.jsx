@@ -17,24 +17,32 @@ const Trains = () => {
     src: "",
     dest: "",
     time: "",
-    seats: 0,
+    seats: "",
   };
 
   const [trains, setTrains] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(initial);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [isFound, setIsFound] = useState(false);
   const [filter, setFilter] = useState([]);
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
+  const [isFound, setIsFound] = useState(false);
 
   useEffect(() => {
     getTrains();
   }, []);
 
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Read
   const getTrains = async (e) => {
     setTrains([]);
     let count = await RemixContract.methods.trainCount().call();
@@ -59,13 +67,7 @@ const Trains = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
+  // Add
   const addTrain = async (e) => {
     e.preventDefault();
 
@@ -116,6 +118,7 @@ const Trains = () => {
     setIsUpdate(true);
   };
 
+  // Update
   const editTrain = async (e) => {
     e.preventDefault();
     try {
@@ -154,6 +157,7 @@ const Trains = () => {
     }
   };
 
+  // Delete
   const removeTrain = async (val) => {
     let values = await web3.eth.getAccounts();
     const authority = values[0];
@@ -166,6 +170,7 @@ const Trains = () => {
     // console.log(response);
   };
 
+  // Search
   const filterItems = (e) => {
     let value = e.target.value.toLowerCase();
     let temp = trains.filter(
@@ -178,7 +183,7 @@ const Trains = () => {
       setIsFound(false);
       alert("No trains found");
     }
-    console.log(temp);
+    // console.log(temp);
   };
 
   return (

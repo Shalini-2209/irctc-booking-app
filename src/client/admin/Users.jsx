@@ -22,7 +22,7 @@ const Users = () => {
 
     for (let i = 0; i < count; i++) {
       let user = await RemixContract.methods.users(i).call();
-      console.log(user);
+      // console.log(user);
 
       setUsers((prev) => [
         ...prev,
