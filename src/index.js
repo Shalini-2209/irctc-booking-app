@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import reportWebVitals from "./reportWebVitals";
-import Register from "./client/users/Register";
+import Routes from "./navigations/routes";
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Register />
+    <Routes />
   </React.StrictMode>,
   document.getElementById("root")
 );
