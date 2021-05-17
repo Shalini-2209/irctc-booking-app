@@ -5,7 +5,7 @@ const web = new web3("http://localhost:7545");
 
 const RemixContract = new web.eth.Contract(
   IrctcABI,
-  "0x77466360AA6bc277369863c36bce93B9e7B4067e"
+  "0x0af0a0380AF1DDF0f1621D5686fd9209De03ADd0"
 );
 
 export default { web, RemixContract };

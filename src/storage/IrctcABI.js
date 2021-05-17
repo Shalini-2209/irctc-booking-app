@@ -181,13 +181,13 @@ export const IrctcABI = [
       },
       {
         internalType: "uint256",
-        name: "passengerNo",
+        name: "trainNo",
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "trainNo",
-        type: "uint256",
+        internalType: "string",
+        name: "date",
+        type: "string",
       },
       {
         internalType: "string",
