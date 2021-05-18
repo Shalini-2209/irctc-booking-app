@@ -1,4 +1,4 @@
-import Trains from "./Trains";
+import Trains from "./trains/Trains";
 
 const Admin = () => {
   return (
