@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import contract from "../../../storage/Contracts";
 import DisplayTrains from "./DisplayTrains";
-import SearchTrain from "./SearchTrain";
 import { ToggleFormButton } from "./TrainButton";
 import TrainForm from "./TrainForm";
 
@@ -19,8 +18,7 @@ const Trains = () => {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(initial);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [filter, setFilter] = useState([]);
-  const [isFound, setIsFound] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
   const [authority, setAuthority] = useState("");
 
   useEffect(() => {
@@ -180,10 +178,11 @@ const Trains = () => {
         <div className="row my-2">
           {/* Search */}
           <div className="col">
-            <SearchTrain
-              setFilter={setFilter}
-              setIsFound={setIsFound}
-              trains={trains}
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Train name"
+              onChange={(e) => setSearchVal(e.target.value)}
             />
           </div>
 
@@ -207,8 +206,7 @@ const Trains = () => {
 
       {/* List all trains */}
       <DisplayTrains
-        isFound={isFound}
-        filter={filter}
+        searchVal={searchVal}
         trains={trains}
         prepopulateData={prepopulateData}
         removeTrain={removeTrain}

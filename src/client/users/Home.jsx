@@ -109,7 +109,7 @@ const Home = () => {
                     <td>
                       <Button
                         style={styles.bookBtn}
-                        // onClick={() => (window.location.href = "/bookTickets")}
+                        onClick={() => (window.location.href = "/bookTickets")}
                       >
                         Book
                       </Button>

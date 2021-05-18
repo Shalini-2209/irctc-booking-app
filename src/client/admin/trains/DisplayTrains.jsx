@@ -1,12 +1,6 @@
 import { ActionButton } from "./TrainButton";
 
-const DisplayTrains = ({
-  isFound,
-  filter,
-  trains,
-  prepopulateData,
-  removeTrain,
-}) => {
+const DisplayTrains = ({ trains, searchVal, prepopulateData, removeTrain }) => {
   return (
     <div>
       <table className="table my-3">
@@ -22,65 +16,41 @@ const DisplayTrains = ({
             <th scope="col">Action</th>
           </tr>
         </thead>
-        {isFound ? (
-          <tbody>
-            {filter
-              // .filter((train) => train.trainNo !== 0)
-              .map((train, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{train.trainNo}</td>
-                  <td>{train.name}</td>
-                  <td>{train.time} Hr</td>
-                  <td>{train.src}</td>
-                  <td>{train.dest}</td>
-                  <td>{train.seats}</td>
-                  <td>
-                    {/* Update and delete buttons */}
-                    <ActionButton
-                      text="Update"
-                      action={prepopulateData}
-                      trainNo={train.trainNo}
-                    />
-                    <ActionButton
-                      text="Delete"
-                      action={removeTrain}
-                      trainNo={train.trainNo}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        ) : (
-          <tbody>
-            {trains
-              // .filter((train) => train.trainNo != 0)
-              .map((train, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{train.trainNo}</td>
-                  <td>{train.name}</td>
-                  <td>{train.time} Hr</td>
-                  <td>{train.src}</td>
-                  <td>{train.dest}</td>
-                  <td>{train.seats}</td>
-                  <td>
-                    {/* Update and delete buttons */}
-                    <ActionButton
-                      text="Update"
-                      action={prepopulateData}
-                      trainNo={train.trainNo}
-                    />
-                    <ActionButton
-                      text="Delete"
-                      action={removeTrain}
-                      trainNo={train.trainNo}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        )}
+
+        <tbody>
+          {trains
+            .filter((train) => {
+              if (searchVal === "") {
+                return train;
+              } else if (train.name.toLowerCase().indexOf(searchVal) !== -1) {
+                return train;
+              }
+            })
+            .map((train, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{train.trainNo}</td>
+                <td>{train.name}</td>
+                <td>{train.time} Hr</td>
+                <td>{train.src}</td>
+                <td>{train.dest}</td>
+                <td>{train.seats}</td>
+                <td>
+                  {/* Update and delete buttons */}
+                  <ActionButton
+                    text="Update"
+                    action={prepopulateData}
+                    trainNo={train.trainNo}
+                  />
+                  <ActionButton
+                    text="Delete"
+                    action={removeTrain}
+                    trainNo={train.trainNo}
+                  />
+                </td>
+              </tr>
+            ))}
+        </tbody>
       </table>
     </div>
   );

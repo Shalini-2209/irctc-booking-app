@@ -23,6 +23,7 @@ const History = () => {
           {
             email: user.email,
             trainNo: user.trainNo,
+            pname: user.name,
             date: user.date,
             age: user.age,
             status: user.status,
@@ -59,6 +60,7 @@ const History = () => {
               <tr>
                 <th>Train Number</th>
                 <th>Passenger Id</th>
+                <th>Passenger Name</th>
                 <th>Date of Journey</th>
                 <th>Age</th>
                 <th>Status</th>
@@ -70,17 +72,20 @@ const History = () => {
                 <tr key={user.pid}>
                   <td>{user.trainNo}</td>
                   <td>{user.pid}</td>
+                  <td>{user.pname}</td>
                   <td>{user.date}</td>
                   <td>{user.age}</td>
                   <td>{user.status}</td>
-                  <td>
-                    <Button
-                      style={styles.bookBtn}
-                      onClick={() => handleCancel(user.pid)}
-                    >
-                      Cancel
-                    </Button>
-                  </td>
+                  {user.status !== "Cancelled" && (
+                    <td>
+                      <Button
+                        style={styles.bookBtn}
+                        onClick={() => handleCancel(user.pid)}
+                      >
+                        Cancel
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
