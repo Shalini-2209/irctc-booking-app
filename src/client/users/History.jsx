@@ -91,8 +91,6 @@ const History = () => {
         ) : (
           <center style={{ margin: "40vh" }}>LOGIN TO VIEW DETAILS</center>
         )}
-
-
       </div>
     </>
   );

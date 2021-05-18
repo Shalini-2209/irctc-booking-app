@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import contract from "../../storage/Contracts";
+import contract from "../../../storage/Contracts";
 import DisplayTrains from "./DisplayTrains";
 import SearchTrain from "./SearchTrain";
-import TrainButton from "./TrainButton";
+import { ToggleFormButton } from "./TrainButton";
 import TrainForm from "./TrainForm";
 
 const Trains = () => {
@@ -93,11 +93,10 @@ const Trains = () => {
 
       let gasEstimate = await addMethod.estimateGas();
       console.log(gasEstimate);
-      const result = await addMethod.send({
+      const response = await addMethod.send({
         from: authority,
         gas: gasEstimate,
       });
-      // console.log(result);
 
       setTrains((prev) => [
         ...prev,
@@ -113,7 +112,6 @@ const Trains = () => {
 
       setForm(initial);
       setShowForm(false);
-      // alert("Added successfully");
     } catch (e) {
       console.log(e);
       alert("Problem inserting train");
@@ -138,7 +136,6 @@ const Trains = () => {
         from: authority,
         gas: gasEstimate,
       });
-      // console.log(response);
 
       let updatedTrains = [];
       trains.map((train) =>
@@ -151,7 +148,6 @@ const Trains = () => {
       setForm(initial);
       setIsUpdate(false);
       setShowForm(!showForm);
-      // alert("Updated successfully");
     } catch (e) {
       console.log(e);
       alert("Problem updating train");
@@ -170,9 +166,8 @@ const Trains = () => {
           .send({ from: authority, gas });
 
         setTrains(trains.filter((train) => train.trainNo !== val));
-        // console.log(response);
       }
-    } catch (Error) {
+    } catch (err) {
       alert("Problem deleting train");
     }
   };
@@ -181,19 +176,28 @@ const Trains = () => {
     <div className="container">
       <h1 className="display-5">Trains</h1>
 
-      {/* Search */}
-      <SearchTrain
-        setFilter={setFilter}
-        setIsFound={setIsFound}
-        trains={trains}
-      />
+      {!showForm && (
+        <div className="row my-2">
+          {/* Search */}
+          <div className="col">
+            <SearchTrain
+              setFilter={setFilter}
+              setIsFound={setIsFound}
+              trains={trains}
+            />
+          </div>
 
-      {/* Toggle button for displaying form */}
-      <TrainButton showForm={showForm} toggleForm={toggleForm} />
+          {/* Toggle button for displaying form */}
+          <div className="col d-flex justify-content-end">
+            <ToggleFormButton showForm={showForm} toggleForm={toggleForm} />
+          </div>
+        </div>
+      )}
 
       {/* Add/Update Form */}
       <TrainForm
         showForm={showForm}
+        toggleForm={toggleForm}
         isUpdate={isUpdate}
         addTrain={addTrain}
         editTrain={editTrain}

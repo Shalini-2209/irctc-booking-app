@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import contract from "../../storage/Contracts";
+import contract from "../../../storage/Contracts";
 
 const Users = () => {
   const [users, setUsers] = useState([]);

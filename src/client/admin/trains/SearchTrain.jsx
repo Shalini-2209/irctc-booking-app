@@ -1,4 +1,4 @@
-const SearchTrain = ({ setFilter, setIsFound, trains }) => {
+const SearchTrain = ({ setFilter, setIsFound, trains, showForm }) => {
   const filterItems = (e) => {
     let value = e.target.value.toLowerCase();
     let temp = trains.filter(
@@ -11,7 +11,6 @@ const SearchTrain = ({ setFilter, setIsFound, trains }) => {
       setIsFound(false);
       alert("No trains found");
     }
-    // console.log(temp);
   };
 
   return (
