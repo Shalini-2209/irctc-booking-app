@@ -7,6 +7,7 @@ import Home from "../client/users/Home";
 import History from "../client/users/History";
 import BookTickets from "../client/users/BookTickets";
 import Admin from "../client/admin/Admin";
+import Loading from "../client/users/Loading";
 
 export default function Routes() {
   const localData = localStorage.getItem("isLogged");
@@ -32,6 +33,9 @@ export default function Routes() {
 
           <Route path="/admin">
             <Admin />
+          </Route>
+          <Route path="/load">
+            <Loading />
           </Route>
 
           <UserContext.Provider value={{ data, setData }}>

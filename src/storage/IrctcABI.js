@@ -1,10 +1,5 @@
 export const IrctcABI = [
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -40,32 +35,6 @@ export const IrctcABI = [
     name: "addTrain",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "addressIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "authority",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -130,6 +99,103 @@ export const IrctcABI = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_userId",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_email",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_pwd",
+        type: "string",
+      },
+    ],
+    name: "register",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_trainNo",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_src",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_dest",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_time",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_seats",
+        type: "uint256",
+      },
+    ],
+    name: "updateTrain",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "addressIndex",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "authority",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "_email",
         type: "string",
@@ -181,13 +247,13 @@ export const IrctcABI = [
       },
       {
         internalType: "uint256",
-        name: "trainNo",
+        name: "passengerNo",
         type: "uint256",
       },
       {
-        internalType: "string",
-        name: "date",
-        type: "string",
+        internalType: "uint256",
+        name: "trainNo",
+        type: "uint256",
       },
       {
         internalType: "string",
@@ -211,34 +277,6 @@ export const IrctcABI = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_userId",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_email",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_pwd",
-        type: "string",
-      },
-    ],
-    name: "register",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -296,44 +334,6 @@ export const IrctcABI = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_trainNo",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_src",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_dest",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_time",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_seats",
-        type: "uint256",
-      },
-    ],
-    name: "updateTrain",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {

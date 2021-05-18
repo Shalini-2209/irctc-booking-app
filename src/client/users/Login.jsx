@@ -11,10 +11,9 @@ const Login = () => {
     password: "",
   };
 
-  const { setData } = useContext(UserContext);
+  const { data, setData } = useContext(UserContext);
 
   const [form, setForm] = useState(initial);
-  const [isLogIn, setIsLogIn] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -32,9 +31,9 @@ const Login = () => {
     console.log("Boolean:", result);
 
     if (result) {
-      setIsLogIn(result);
       setData(form.email);
-      setForm(initial);
+      // setForm(initial);
+      window.location.href = "/home";
     } else {
       alert("Invalid user");
     }
@@ -42,8 +41,8 @@ const Login = () => {
 
   return (
     <>
-      {isLogIn ? (
-        <Redirect to="/home" />
+      {data ? (
+        <Redirect to="/load" />
       ) : (
         <div style={{ backgroundColor: "#282c34" }}>
           <Container fluid>

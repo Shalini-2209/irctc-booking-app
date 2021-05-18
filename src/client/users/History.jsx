@@ -9,16 +9,14 @@ const History = () => {
   const [history, setHistory] = useState([]);
   const { data } = useContext(UserContext);
 
-  useEffect(() => {
-    getSummary();
+  useEffect(async () => {
+    await getSummary();
   }, []);
 
   const getSummary = async () => {
     let count = await contract.RemixContract.methods.passengerCount().call();
-
     for (let i = 0; i < count; i++) {
       let user = await contract.RemixContract.methods.passengers(i).call();
-
       if (data === user.email) {
         setHistory((prev) => [
           ...prev,
@@ -42,7 +40,6 @@ const History = () => {
       .cancel(pid)
       .send({ from: authority });
     window.location.href = window.location.href;
-    console.log(cancel);
   };
 
   return (
