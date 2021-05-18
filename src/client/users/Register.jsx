@@ -39,13 +39,14 @@ const Register = () => {
         .register(values[index], form.name, form.email, form.password)
         .send({ from: authority, gas });
 
-      console.log(index);
+      // console.log(index);
       console.log(result);
 
       setForm(initial);
       setCPass("");
-
-      alert("Registration successful");
+      if (window.confirm("Registration successful, Try Loging in!")) {
+        window.location.href = "/login";
+      }
     }
   };
 
